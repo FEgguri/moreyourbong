@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "173932211482",
+    "firebase_url": "https://flutter-moreyourbong-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "flutter-moreyourbong",
+    "storage_bucket": "flutter-moreyourbong.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173932211482:android:641e99251e5b9b292e50a3",
+        "android_client_info": {
+          "package_name": "com.example.moreyourbong"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARbeTF33nxmKnXsCvsf3r6Ditkr_eUV4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
