@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
@@ -9,14 +11,17 @@ class ChatPage extends StatelessWidget {
     String message = "안녕하세요 이 글은 장문의 글이라서 잘릴 수도 있어요 근데 제가 잘 설정 해놔서 4줄을 넘어가게 되면 ...으로 표시된답니다 ㅎ하하하하하하하하ㅏ하하하하하하하ㅏ하하하하하하하ㅏ";
     String time = "오후 2:31";
     double bottomSheetHeight = 100;
+    // Color(0xFFFFCA28)
+    // Color(0xFF)
     return GestureDetector(
+      // behavior: HitTestBehavior.translucent,
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          backgroundColor: Color(0xEE4CAF50),
+          backgroundColor: Color(0xFFFFCA28),
           centerTitle: true,
           title: Text(
             "모임 이름",
@@ -25,12 +30,12 @@ class ChatPage extends StatelessWidget {
         ),
         body: ListView.separated(
             padding: EdgeInsets.fromLTRB(12, 20, 12, bottomSheetHeight + 10),
-            itemCount: 10,
+            itemCount: 7,
             separatorBuilder: (context, index) {
               return SizedBox(height: 10);
             },
             itemBuilder: (context, index) {
-              if (index == 0) {
+              if (index == 0 || index == 2 || index == 3 || index == 6) {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -51,7 +56,10 @@ class ChatPage extends StatelessWidget {
                       children: [
                         Text(
                           "오상구",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Color(0xff343434),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         SizedBox(height: 4),
                         Row(
@@ -61,7 +69,8 @@ class ChatPage extends StatelessWidget {
                               padding: EdgeInsets.all(12),
                               constraints: BoxConstraints(maxWidth: 250),
                               decoration: BoxDecoration(
-                                color: Color(0xffFFCA28),
+                                color: Colors.white,
+                                // color: Color(0xffFFCA28),
                                 borderRadius: BorderRadius.circular(14),
                               ),
                               child: Text(
@@ -69,7 +78,7 @@ class ChatPage extends StatelessWidget {
                                 softWrap: true,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 4,
-                                style: TextStyle(color: Colors.black87),
+                                style: TextStyle(color: Color(0xFF343434)),
                               ),
                             ),
                             SizedBox(width: 4),
@@ -77,8 +86,7 @@ class ChatPage extends StatelessWidget {
                               time,
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF888888),
                               ),
                             ),
                           ],
@@ -96,24 +104,33 @@ class ChatPage extends StatelessWidget {
                       time,
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.grey[600],
-                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF888888),
                       ),
                     ),
                     SizedBox(width: 4),
-                    Container(
-                      padding: EdgeInsets.all(12),
-                      constraints: BoxConstraints(maxWidth: 250),
-                      decoration: BoxDecoration(
-                        color: Color(0xff4CAF50),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Text(
-                        message,
-                        maxLines: 4,
-                        softWrap: true,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.white),
+                    GestureDetector(
+                      onTap: () {
+                        print("message tap");
+                        FocusScope.of(context).unfocus();
+                      },
+                      onLongPress: () {
+                        print("message long press");
+                        FocusScope.of(context).unfocus();
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        constraints: BoxConstraints(maxWidth: 250),
+                        decoration: BoxDecoration(
+                          color: Color(0xff4CAF50),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Text(
+                          message,
+                          maxLines: 4,
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
@@ -144,7 +161,10 @@ class ChatPage extends StatelessWidget {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
-                        borderSide: BorderSide(color: Color(0xff4CAF50), width: 2),
+                        borderSide: BorderSide(
+                          width: 2,
+                          color: Color(0xff4CAF50),
+                        ),
                       ),
                     ),
                   ),
