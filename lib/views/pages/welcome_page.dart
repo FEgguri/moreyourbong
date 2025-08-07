@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moreyourbong/views/widgets/app_bar.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -20,32 +21,7 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF8F4E8),
-        surfaceTintColor: Colors.transparent,
-        elevation: 4,
-        shadowColor: Colors.black.withOpacity(0.15),
-        centerTitle: true, // 가운데 정렬
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(
-              'assets/images/logo.png',
-              height: 55,
-              width: 55,
-              fit: BoxFit.contain,
-            ),
-            //SizedBox(width: 8),
-            Text(
-              'MoreYourBong',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar: appBar(context),
       body: Container(
         color: Color(0xFFF8F4E8),
         child: Center(
@@ -133,7 +109,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     width: double.infinity,
                     height: 55,
                     decoration: BoxDecoration(
-                      color: Color(0xFF4F583B),
+                      color: const Color(0xFF4F583B),
                       borderRadius: BorderRadius.circular(15),
                       //border: Border.all(width: 1),
                     ),
