@@ -1,3 +1,18 @@
+buildscript {
+    ext.kotlin_version = '1.9.24' // ✅ Kotlin 버전 명시
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.2.1" // ✅ Gradle Plugin 버전
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.gms:google-services:4.4.0" // ✅ Firebase 사용 시 필수
+        
+    }
+}
+
 allprojects {
     repositories {
         google()
@@ -5,6 +20,7 @@ allprojects {
     }
 }
 
+//  프로젝트 구조 설정 (이건 유지)
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
