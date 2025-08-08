@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:moreyourbong/views/widgets/party_list.dart';
+import 'package:moreyourbong/views/pages/create_party_page.dart';
+import 'package:moreyourbong/views/pages/party_list/widgets/party_list.dart';
 
 class PartyListPage extends StatefulWidget {
+  final String selectedAddress;
+  PartyListPage({required this.selectedAddress});
+
   @override
   State<PartyListPage> createState() => _PartyListPageState();
 }
@@ -15,23 +19,24 @@ class _PartyListPageState extends State<PartyListPage> {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
-          "OO시 OO구 OO동",
+          widget.selectedAddress,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
-      body: PartyList(),
+      body: PartyList(selectedAddress: widget.selectedAddress),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // 모임 만들기 페이지로 이동
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CreatePartyPage()));
         },
         backgroundColor: Color(0xFF4CAF50),
         foregroundColor: Colors.white,
         splashColor: Color(0xFFFFCA28),
-        child: Icon(Icons.person_add),
         shape: const CircleBorder(),
+        child: Icon(Icons.person_add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
