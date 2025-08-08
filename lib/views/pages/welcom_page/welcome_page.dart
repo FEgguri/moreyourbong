@@ -32,7 +32,7 @@ class _WelcomePageState extends State<WelcomePage> {
       });
       print('내 동네: $locationName');
     } catch (e) {
-      print('에러 발생: $e');
+      print('에러: $e');
     }
   }
 
@@ -105,7 +105,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     child: Center(child: Text('내 동네 설정')),
                   ),
                 ),
-                if (_locationName != null) (Text('$_locationName'))
+                if (_locationName != null) (Text('현재 위치 : $_locationName'))
               ],
             ),
           ),
