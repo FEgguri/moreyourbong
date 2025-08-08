@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moreyourbong/views/pages/chat/chat_page.dart';
 
 Future<void> showCustomDialog(BuildContext context) {
   return showDialog(
@@ -40,7 +41,8 @@ Future<void> showCustomDialog(BuildContext context) {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            // 채팅방으로 이동
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => ChatPage()));
           },
           style: TextButton.styleFrom(
               foregroundColor: Colors.white,
