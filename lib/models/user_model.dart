@@ -1,14 +1,11 @@
-// lib/models/user_model.dart
-
 import 'dart:convert';
 
 class UserModel {
-  final String id; //식별키
-  final String name; //사용자 이름
-  final String address; // 주소
-  final String? img; // 이미지 주소
+  final String id; // 문서 id (필수)
+  final String name; // 사용자 이름
+  final String address; // 주소 (예: "서울 강남구")
+  final String? img; // 프로필 이미지 URL
 
-  //생성자
   UserModel({
     required this.id,
     required this.name,
@@ -16,19 +13,13 @@ class UserModel {
     this.img,
   });
 
-//빈사용자(기본값) 생성 핼퍼
-  factory UserModel.empty() => UserModel(
-        id: '',
-        name: '',
-        address: '',
-        img: null,
-      );
+  factory UserModel.empty() =>
+      UserModel(id: '', name: '', address: '', img: null);
 
-//원본은 유지하고 기존 객체에서 일부만 바꾼 새 객체 생성
   UserModel copyWith({
     String? id,
-    String? name, //사용자 이름
-    String? address, // 주소
+    String? name,
+    String? address,
     String? img,
   }) {
     return UserModel(
@@ -39,17 +30,13 @@ class UserModel {
     );
   }
 
-//객체를 map으로 변환
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'address': address,
-      'img': img,
-    };
-  }
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'name': name,
+        'address': address,
+        'img': img,
+      };
 
-//Map 데이터를 UserModel객체로 복원
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       id: (map['id'] ?? '') as String,
@@ -59,14 +46,10 @@ class UserModel {
     );
   }
 
-  //json을 UserModel로 변환
   String toJson() => json.encode(toMap());
-
-  //fromJson
   factory UserModel.fromJson(String source) =>
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  //디버깅 출력용
   @override
   String toString() =>
       'UserModel(id: $id, name: $name, address: $address, img: $img)';

@@ -130,8 +130,26 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
             height: 100,
             child: GestureDetector(
                 onTap: canStart
-                    ? () {
-                        print('리스트페이지로 이동');
+                    ? () async {
+                        try {
+                          print('리스트페이지로 이동');
+                          //firestore저장
+                          await ref
+                              .read(userViewModelProvider.notifier)
+                              .saveToFirestore();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('저장완료'),
+                            ),
+                          );
+                          // Navigator.push(context, MaterialPageRoute(builder: (_) => const PartyListPage()));
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('저장실패 : $e'),
+                            ),
+                          );
+                        }
                       }
                     : null,
                 child: Center(
