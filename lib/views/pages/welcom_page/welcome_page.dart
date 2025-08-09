@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:moreyourbong/services/location_service.dart';
-import 'package:moreyourbong/services/vworld_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moreyourbong/viewmodels/user_view_model.dart';
 import 'package:moreyourbong/views/widgets/app_bar.dart';
 
-class WelcomePage extends StatefulWidget {
+class WelcomePage extends ConsumerStatefulWidget {
+  const WelcomePage({super.key});
+
   @override
-  State<WelcomePage> createState() => _WelcomePageState();
+  ConsumerState<WelcomePage> createState() => _WelcomePageState();
 }
 
-class _WelcomePageState extends State<WelcomePage> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  String? _locationName; // 동네 이름 저장할 상태 변수
+class _WelcomePageState extends ConsumerState<WelcomePage> {
+  //final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
 
   @override
   void dispose() {
@@ -20,24 +21,32 @@ class _WelcomePageState extends State<WelcomePage> {
     super.dispose();
   }
 
-  void _handleLocationButtonPressed() async {
+  Future<void> _setAddress() async {
     try {
-      final position = await LocationService.getCurrentLocation();
-      final locationName = await VworldService.getLocationName(
-        position.longitude,
-        position.latitude,
+      await ref
+          .read(userViewModelProvider.notifier)
+          .setAddressFromCurrentLocation();
+      final addr = ref.read(userViewModelProvider).address;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('현재위치: $addr'),
+        ),
       );
-      setState(() {
-        _locationName = locationName; // 상태 업데이트
-      });
-      print('내 동네: $locationName');
     } catch (e) {
-      print('에러: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('에러: $e'),
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    //유저 프로바이더 구독
+    final user = ref.watch(userViewModelProvider);
+//이름 주소 확인(시작하기버튼용)
+    final canStart = user.name.isNotEmpty && user.address.isNotEmpty;
     // TODO: implement build
     return Scaffold(
       appBar: appBar(context),
@@ -63,7 +72,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       //프로필이미지
                       width: 240,
                       height: 240,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Color(0xFFE8E2D3),
 
                         // shape: BoxShape.circle,
@@ -81,6 +90,8 @@ class _WelcomePageState extends State<WelcomePage> {
                 ),
                 TextFormField(
                   controller: _nameController,
+                  onChanged: (v) =>
+                      ref.read(userViewModelProvider.notifier).setName(v),
                   decoration: InputDecoration(
                       labelText: '이름을 입력하세요',
                       border: OutlineInputBorder(
@@ -90,9 +101,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    _handleLocationButtonPressed();
-                  },
+                  onTap: _setAddress,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 8),
                     width: double.infinity,
@@ -105,7 +114,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     child: Center(child: Text('내 동네 설정')),
                   ),
                 ),
-                if (_locationName != null) (Text('현재 위치 : $_locationName'))
+                if (user.address.isNotEmpty) Text(user.address),
               ],
             ),
           ),
@@ -120,16 +129,18 @@ class _WelcomePageState extends State<WelcomePage> {
             width: double.infinity,
             height: 100,
             child: GestureDetector(
-                onTap: () {
-                  print('바텀버튼');
-                },
+                onTap: canStart
+                    ? () {
+                        print('리스트페이지로 이동');
+                      }
+                    : null,
                 child: Center(
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 8),
                     width: double.infinity,
                     height: 55,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF4F583B),
+                      color: canStart ? Color(0xFFF4B840) : Color(0xFF4F583B),
                       borderRadius: BorderRadius.circular(15),
                       //border: Border.all(width: 1),
                     ),
