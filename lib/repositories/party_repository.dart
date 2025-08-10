@@ -9,8 +9,7 @@ class PartyRepository {
       FirebaseFirestore firestore = FirebaseFirestore.instance;
 
       // 경로 : parties > address > items 여기서 불러오기
-      final collectionRef =
-          firestore.collection("parties").doc(address).collection("items");
+      final collectionRef = firestore.collection("parties").doc(address).collection("items");
 
       final snapshot = await collectionRef.get();
       final documentSnapshot = snapshot.docs;
@@ -46,8 +45,7 @@ class PartyRepository {
       FirebaseFirestore firestore = FirebaseFirestore.instance;
 
       // 경로 : parties > address > items 여기에 저장
-      final collectionRef =
-          firestore.collection("parties").doc(address).collection("items");
+      final collectionRef = firestore.collection("parties").doc(address).collection("items");
       final docRef = collectionRef.doc();
 
       final map = {

@@ -29,8 +29,7 @@ class _PartyListPageState extends State<PartyListPage> {
       body: PartyList(selectedAddress: widget.selectedAddress),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CreatePartyPage()));
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePartyPage()));
         },
         backgroundColor: Color(0xFF4CAF50),
         foregroundColor: Colors.white,

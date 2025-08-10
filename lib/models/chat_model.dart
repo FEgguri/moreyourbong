@@ -1,26 +1,25 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class Chat {
   String sender;
   String senderId;
-  String address;
+  String partyName;
   String message;
   DateTime createdAt;
   String profileImgUrl;
 
   Chat({
-    required this.sender,
-    required this.senderId,
-    required this.address,
-    required this.message,
-    required this.createdAt,
-    required this.profileImgUrl,
+    required this.sender, // 메세지 쓴 사람
+    required this.senderId, // 메세지 쓴 사람 고유 ID -> 닉네임이 겹칠까봐?
+    required this.partyName, // 모임 이름으로 고유 키 역할
+    required this.message, // 메세지 내용
+    required this.createdAt, // 메세지 작성 날짜 및 시간
+    required this.profileImgUrl, // 메세지 쓴 사람 이미지
   });
 
   Chat.fromJson(Map<String, dynamic> map)
       : this(
           sender: map["sender"],
           senderId: map["senderId"],
-          address: map["address"],
+          partyName: map["partyName"],
           message: map["message"],
           createdAt: map["createdAt"],
           profileImgUrl: map["profileImgUrl"],
@@ -30,7 +29,7 @@ class Chat {
     return {
       "sender": sender,
       "senderId": senderId,
-      "address": address,
+      "partyName": partyName,
       "message": message,
       "createdAt": createdAt,
       "profileImgUrl": profileImgUrl,
