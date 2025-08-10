@@ -15,8 +15,8 @@ class PartyRepository {
       final documentSnapshot = snapshot.docs;
       final iterable = documentSnapshot.map((e) {
         // ID 필요시 아래 코드 사용하기
-        // final map = {"id": e.id, ...e.data()};
-        final map = e.data();
+        final map = {"id": e.id, ...e.data()};
+        // final map = e.data();
         return Party.fromJson(map);
       });
 
@@ -36,6 +36,7 @@ class PartyRepository {
 
   // 모임 등록하기
   Future<bool> addParty({
+    required String id,
     required String partyName,
     required String address,
     required String content,
@@ -49,6 +50,7 @@ class PartyRepository {
       final docRef = collectionRef.doc();
 
       final map = {
+        "id": id,
         "partyName": partyName,
         "address": address,
         "content": content,
