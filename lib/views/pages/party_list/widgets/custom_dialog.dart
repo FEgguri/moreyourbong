@@ -41,8 +41,7 @@ Future<void> showCustomDialog(BuildContext context) {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => ChatPage()));
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage()));
           },
           style: TextButton.styleFrom(
               foregroundColor: Colors.white,

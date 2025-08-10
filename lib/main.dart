@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moreyourbong/firebase_options.dart';
+import 'package:moreyourbong/models/party_model.dart';
+import 'package:moreyourbong/views/pages/chat/chat_page.dart';
 import 'package:moreyourbong/views/pages/party_list/party_list_page.dart';
 import 'package:moreyourbong/views/pages/welcome_page.dart';
 
@@ -19,7 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: WelcomePage(),
+      home: ChatPage(
+        Party(
+          id: "kuXkfaog4cgSML4xIJmQ",
+          address: "서울시 강남구 무슨동",
+          content: "💕 모여서 봉사 할동 하실 분들 환영합니다~ 채팅방 참여하시고 같이 봉사 활동 해요!",
+          partyName: "행복한 모임 이름",
+        ),
+      ),
     );
   }
 }

@@ -26,9 +26,7 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
 //위치설청
   Future<void> _setAddress() async {
     try {
-      await ref
-          .read(userViewModelProvider.notifier)
-          .setAddressFromCurrentLocation();
+      await ref.read(userViewModelProvider.notifier).setAddressFromCurrentLocation();
       final addr = ref.read(userViewModelProvider).address;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -98,8 +96,7 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
                               fit: BoxFit.cover,
                             )
                           // 2. 없으면 아이콘표시
-                          : const Icon(Icons.add,
-                              size: 25, color: Colors.white),
+                          : const Icon(Icons.add, size: 25, color: Colors.white),
                     ),
                   ),
                 ),
@@ -110,12 +107,10 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
               // 이름 입력
               TextFormField(
                 controller: _nameController,
-                onChanged: (v) =>
-                    ref.read(userViewModelProvider.notifier).setName(v),
+                onChanged: (v) => ref.read(userViewModelProvider.notifier).setName(v),
                 decoration: InputDecoration(
                   labelText: '이름을 입력하세요',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30)),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
                 ),
               ),
 
@@ -159,9 +154,7 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
                         try {
                           print('리스트페이지로 이동');
                           //firestore저장
-                          await ref
-                              .read(userViewModelProvider.notifier)
-                              .saveToFirestore();
+                          await ref.read(userViewModelProvider.notifier).saveToFirestore();
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
