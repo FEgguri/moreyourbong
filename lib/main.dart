@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ChatPage(Party(address: "", content: "", partyName: "행복한 모임 이름")),
+      home: ChatPage(Party(id: "", address: "", content: "", partyName: "행복한 모임 이름")),
     );
   }
 }

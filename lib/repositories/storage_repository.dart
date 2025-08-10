@@ -34,8 +34,7 @@ class StorageRepository {
     required Uint8List bytes,
     required String fileNameHint,
   }) async {
-    final mime = lookupMimeType(fileNameHint, headerBytes: bytes) ??
-        'application/octet-stream';
+    final mime = lookupMimeType(fileNameHint, headerBytes: bytes) ?? 'application/octet-stream';
     if (!_allowed.contains(mime)) {
       throw Exception('허용되지 않는 이미지 형식입니다. (jpg/png/webp)');
     }

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moreyourbong/models/chat_model.dart';
 
 class ChatRepository {
-  Future<List<Chat>?> getChatMessages(String partyName) async {
+  Future<List<Chat>?> getChatMessages(String partyId) async {
     try {
       final firestore = FirebaseFirestore.instance;
       final col = firestore.collection("Chat");
@@ -18,7 +18,7 @@ class ChatRepository {
             };
             return Chat.fromJson(newMap);
           })
-          .where((chat) => chat.partyName == partyName)
+          .where((chat) => chat.partyId == partyId)
           .toList();
     } catch (e) {
       print(e);
@@ -38,6 +38,7 @@ class ChatRepository {
       final collection = firestore.collection("Chat");
       final doc = collection.doc();
       await doc.set({
+        "id": doc.id,
         "sender": sender,
         "senderId": senderId,
         "partyName": partyName,

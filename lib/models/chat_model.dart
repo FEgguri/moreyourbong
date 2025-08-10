@@ -4,6 +4,7 @@ class Chat {
   String senderId;
   String partyName;
   String message;
+  String partyId;
   DateTime createdAt;
   String imageUrl;
 
@@ -13,6 +14,7 @@ class Chat {
     required this.senderId, // 메세지 쓴 사람 고유 ID -> 닉네임이 겹칠까봐?
     required this.partyName, // 모임 이름으로 고유 키 역할
     required this.message, // 메세지 내용
+    required this.partyId, // 메세지 작성 날짜 및 시간
     required this.createdAt, // 메세지 작성 날짜 및 시간
     required this.imageUrl, // 메세지 쓴 사람 이미지
   });
@@ -24,6 +26,7 @@ class Chat {
           senderId: map["senderId"] ?? "",
           partyName: map["partyName"] ?? "",
           message: map["message"] ?? "",
+          partyId: map["partyId"] ?? "",
           createdAt: DateTime.parse(map["createdAt"] ?? ""),
           imageUrl: map["imageUrl"] ?? "",
         );
@@ -35,6 +38,7 @@ class Chat {
       "senderId": senderId,
       "partyName": partyName,
       "message": message,
+      "partyId": partyId,
       "createdAt": createdAt.toIso8601String(),
       "imageUrl": imageUrl,
     };
