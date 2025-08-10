@@ -1,6 +1,8 @@
 // 1. 상태 => List<Chat>
 
 // 2. 뷰모델
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moreyourbong/models/chat_model.dart';
 import 'package:moreyourbong/repositories/chat_repository.dart';
@@ -13,6 +15,7 @@ class ChatViewModel extends AutoDisposeFamilyNotifier<List<Chat>, String> {
   }
 
   final chatRepo = ChatRepository();
+  StreamSubscription<List<Chat>>? sub;
 
   Future<void> getChatMessages(String partyName) async {
     final result = await chatRepo.getChatMessages(partyName);
@@ -25,7 +28,7 @@ class ChatViewModel extends AutoDisposeFamilyNotifier<List<Chat>, String> {
       senderId: newChat.senderId,
       partyName: newChat.partyName,
       message: newChat.message,
-      imageUrl: newChat.profileImgUrl,
+      imageUrl: newChat.imageUrl,
     );
     return result;
   }
@@ -34,10 +37,18 @@ class ChatViewModel extends AutoDisposeFamilyNotifier<List<Chat>, String> {
     final stream = chatRepo.chatListStream(partyName);
     final streamSubscription = stream.listen(
       (chatList) {
+        print("ddd");
         state = chatList;
       },
     );
+
+    ref.onDispose(() {
+      streamSubscription.cancel();
+    });
   }
 }
 
 // 3. 뷰모델 관리자
+final chatViewModel = NotifierProvider.autoDispose.family<ChatViewModel, List<Chat>, String>(() {
+  return ChatViewModel();
+});

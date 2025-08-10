@@ -1,14 +1,20 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moreyourbong/models/chat_model.dart';
+import 'package:moreyourbong/models/party_model.dart';
+import 'package:moreyourbong/viewmodels/chat_view_model.dart';
 import 'package:moreyourbong/views/pages/chat/widgets/chatting_card.dart';
 
-class ChatPage extends StatefulWidget {
+class ChatPage extends ConsumerStatefulWidget {
+  ChatPage(this.party);
+  Party party;
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  ConsumerState<ChatPage> createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatPageState extends ConsumerState<ChatPage> {
   double _bottomSheetHeight = 0;
 
   // BottomSheet의 자식 위젯에 GlobalKey 설정
@@ -33,6 +39,9 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final chatVm = ref.watch(chatViewModel(widget.party.partyName).notifier);
+    final chats = ref.read(chatViewModel(widget.party.partyName));
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -43,7 +52,7 @@ class _ChatPageState extends State<ChatPage> {
           backgroundColor: Color(0xFFF8F4E8),
           centerTitle: true,
           title: Text(
-            "모임 이름",
+            widget.party.partyName,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -107,6 +116,17 @@ class _ChatPageState extends State<ChatPage> {
                 GestureDetector(
                   onTap: () {
                     print("send tap");
+                    chatVm.sendMessage(
+                      Chat(
+                        id: "",
+                        createdAt: DateTime.now(),
+                        message: "새로운 메세지",
+                        partyName: widget.party.partyName,
+                        imageUrl: "",
+                        sender: "오상구",
+                        senderId: "senderID",
+                      ),
+                    );
                   },
                   child: Container(
                     width: 50,

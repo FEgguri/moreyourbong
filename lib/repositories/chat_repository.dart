@@ -56,7 +56,7 @@ class ChatRepository {
     try {
       //
       final firestore = FirebaseFirestore.instance;
-      final collection = firestore.collection("Chat").where("partName", isEqualTo: partyName).orderBy("createdAt", descending: true);
+      final collection = firestore.collection("Chat").where("partyName", isEqualTo: partyName).orderBy("createdAt", descending: false);
       final stream = collection.snapshots();
       final newStream = stream.map((event) {
         return event.docs.map((e) {

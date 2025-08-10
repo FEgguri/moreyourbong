@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moreyourbong/firebase_options.dart';
+import 'package:moreyourbong/models/party_model.dart';
+import 'package:moreyourbong/views/pages/chat/chat_page.dart';
 import 'package:moreyourbong/views/pages/party_list/party_list_page.dart';
 import 'package:moreyourbong/views/pages/welcome_page.dart';
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: WelcomePage(),
+      home: ChatPage(Party(address: "", content: "", partyName: "행복한 모임 이름")),
     );
   }
 }
