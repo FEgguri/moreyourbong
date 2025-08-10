@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class ChattingCard extends StatelessWidget {
   String message;
   String time;
+  String imageUrl;
   bool isMine;
 
   ChattingCard({
     required this.message,
     required this.time,
+    required this.imageUrl,
     required this.isMine,
   });
 
@@ -57,16 +59,21 @@ class ChattingCard extends StatelessWidget {
         : Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 50,
-                height: 50,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.network(
-                    "https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
-                    fit: BoxFit.cover,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  color: Colors.grey[400],
+                  child: Icon(
+                    Icons.person,
+                    size: 30,
                   ),
                 ),
+                // child: Image.network(
+                //   "https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
+                //   fit: BoxFit.cover,
+                // ),
               ),
               SizedBox(width: 8),
               Column(
@@ -119,12 +126,12 @@ String message = "안녕하세요 이 글은 장문의 글이라서 잘릴 수�
 String time = "오후 2:31";
 
 List<ChattingCard> tempDataList = [
-  ChattingCard(message: message, time: time, isMine: false),
-  ChattingCard(message: message, time: time, isMine: false),
-  ChattingCard(message: message, time: time, isMine: true),
-  ChattingCard(message: message, time: time, isMine: false),
-  ChattingCard(message: message, time: time, isMine: true),
-  ChattingCard(message: message, time: time, isMine: true),
-  ChattingCard(message: message, time: time, isMine: false),
-  ChattingCard(message: message, time: time, isMine: true),
+  ChattingCard(message: message, time: time, imageUrl: "", isMine: false),
+  ChattingCard(message: message, time: time, imageUrl: "", isMine: false),
+  ChattingCard(message: message, time: time, imageUrl: "", isMine: true),
+  ChattingCard(message: message, time: time, imageUrl: "", isMine: false),
+  ChattingCard(message: message, time: time, imageUrl: "", isMine: true),
+  ChattingCard(message: message, time: time, imageUrl: "", isMine: true),
+  ChattingCard(message: message, time: time, imageUrl: "", isMine: false),
+  ChattingCard(message: message, time: time, imageUrl: "", isMine: true),
 ];

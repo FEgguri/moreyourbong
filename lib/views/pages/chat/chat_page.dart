@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moreyourbong/models/chat_model.dart';
 import 'package:moreyourbong/models/party_model.dart';
+import 'package:moreyourbong/models/user_model.dart';
 import 'package:moreyourbong/viewmodels/chat_view_model.dart';
 import 'package:moreyourbong/views/pages/chat/widgets/chatting_card.dart';
 
@@ -71,7 +72,12 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             return SizedBox(height: 10);
           },
           itemBuilder: (context, index) {
-            return ChattingCard(message: chats[index].message, time: chats[index].createdAt.toString(), isMine: false);
+            return ChattingCard(
+              message: chats[index].message,
+              time: chats[index].createdAt.toString(),
+              imageUrl: "",
+              isMine: user.id == chats[index].senderId,
+            );
           },
         ),
         bottomSheet: SafeArea(
@@ -131,9 +137,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                         createdAt: DateTime.now(),
                         message: messageController.text,
                         partyName: widget.party.partyName,
-                        imageUrl: "",
-                        sender: "오상구",
-                        senderId: "senderID",
+                        imageUrl: user.img!,
+                        sender: user.name,
+                        senderId: user.id,
+                        partyId: widget.party.id,
                       ),
                     )
                         .then((_) {
@@ -161,3 +168,5 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     );
   }
 }
+
+UserModel user = UserModel(id: "Nh4TLr0eMicXhd2fof9m", address: "경기도 의정부시", img: "", name: "오상팔");
