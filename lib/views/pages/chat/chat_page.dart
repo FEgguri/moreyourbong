@@ -1,18 +1,27 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moreyourbong/models/chat_model.dart';
+import 'package:moreyourbong/models/party_model.dart';
+import 'package:moreyourbong/models/user_model.dart';
+import 'package:moreyourbong/viewmodels/chat_view_model.dart';
 import 'package:moreyourbong/views/pages/chat/widgets/chatting_card.dart';
 
-class ChatPage extends StatefulWidget {
+class ChatPage extends ConsumerStatefulWidget {
+  ChatPage(this.party);
+  Party party;
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  ConsumerState<ChatPage> createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatPageState extends ConsumerState<ChatPage> {
   double _bottomSheetHeight = 0;
 
   // BottomSheet의 자식 위젯에 GlobalKey 설정
   final GlobalKey _bottomSheetKey = GlobalKey();
+
+  final messageController = TextEditingController();
 
   @override
   void initState() {
@@ -32,7 +41,16 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   @override
+  void dispose() {
+    messageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final chatVm = ref.read(chatViewModel(widget.party.partyName).notifier);
+    final chats = ref.watch(chatViewModel(widget.party.partyName));
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -43,18 +61,23 @@ class _ChatPageState extends State<ChatPage> {
           backgroundColor: Color(0xFFF8F4E8),
           centerTitle: true,
           title: Text(
-            "모임 이름",
+            widget.party.partyName,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         body: ListView.separated(
           padding: EdgeInsets.fromLTRB(12, 20, 12, _bottomSheetHeight + 10),
-          itemCount: 7,
+          itemCount: chats.length,
           separatorBuilder: (context, index) {
             return SizedBox(height: 10);
           },
           itemBuilder: (context, index) {
-            return tempDataList[index];
+            return ChattingCard(
+              message: chats[index].message,
+              time: chats[index].createdAt.toString(),
+              imageUrl: "",
+              isMine: user.id == chats[index].senderId,
+            );
           },
         ),
         bottomSheet: SafeArea(
@@ -77,6 +100,7 @@ class _ChatPageState extends State<ChatPage> {
                   child: TextField(
                     maxLines: 4,
                     minLines: 1,
+                    controller: messageController,
                     onChanged: (value) {
                       setState(() {
                         final bottomSheetContext = _bottomSheetKey.currentContext;
@@ -106,7 +130,22 @@ class _ChatPageState extends State<ChatPage> {
                 SizedBox(width: 8),
                 GestureDetector(
                   onTap: () {
-                    print("send tap");
+                    chatVm
+                        .sendMessage(
+                      Chat(
+                        id: "",
+                        createdAt: DateTime.now(),
+                        message: messageController.text,
+                        partyName: widget.party.partyName,
+                        imageUrl: user.img!,
+                        sender: user.name,
+                        senderId: user.id,
+                        partyId: widget.party.id,
+                      ),
+                    )
+                        .then((_) {
+                      messageController.text = "";
+                    });
                   },
                   child: Container(
                     width: 50,
@@ -129,3 +168,5 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 }
+
+UserModel user = UserModel(id: "Nh4TLr0eMicXhd2fof9m", address: "경기도 의정부시", img: "", name: "오상팔");
