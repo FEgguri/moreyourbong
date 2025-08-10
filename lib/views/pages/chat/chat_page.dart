@@ -20,6 +20,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   // BottomSheet의 자식 위젯에 GlobalKey 설정
   final GlobalKey _bottomSheetKey = GlobalKey();
 
+  final messageController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +37,12 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    messageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,6 +94,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   child: TextField(
                     maxLines: 4,
                     minLines: 1,
+                    controller: messageController,
                     onChanged: (value) {
                       setState(() {
                         final bottomSheetContext = _bottomSheetKey.currentContext;
