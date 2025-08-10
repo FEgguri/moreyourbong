@@ -6,12 +6,26 @@ class UserRepository {
   final FirebaseFirestore _db;
   UserRepository(this._db);
 
-  /// users 컬렉션명: 네 프로젝트에선 'User' 사용 중
+  /// users
   CollectionReference<Map<String, dynamic>> get _col => _db.collection('User');
 
   /// upsert: user.id 로 문서 고정
   Future<void> createOrUpdateUser(UserModel user) async {
-    await _col.doc(user.id).set(user.toMap(), SetOptions(merge: true));
+    await _col.doc(user.id).set(
+          user.toMap(),
+          SetOptions(merge: true),
+        );
+  }
+
+  //이미지업로드
+  Future<void> updateProfileImageUrl({
+    required String userId,
+    required String url,
+  }) async {
+    await _col.doc(userId).set(
+      {'img': url},
+      SetOptions(merge: true),
+    );
   }
 
   /// 실시간 구독
