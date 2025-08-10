@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:moreyourbong/viewmodels/user_view_model.dart';
+import 'package:moreyourbong/views/pages/party_list/party_list_page.dart';
 import 'package:moreyourbong/views/widgets/app_bar.dart';
 
 class WelcomePage extends ConsumerStatefulWidget {
@@ -162,13 +163,28 @@ class _WelcomePageState extends ConsumerState<WelcomePage> {
                           await ref
                               .read(userViewModelProvider.notifier)
                               .saveToFirestore();
+                          final saved = ref.read(userViewModelProvider);
+                          if (saved.id.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('유저 저장 실패: ID 없음')),
+                            );
+                            return;
+                          }
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('저장완료'),
                             ),
                           );
-                          // Navigator.push(context, MaterialPageRoute(builder: (_) => const PartyListPage()));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PartyListPage(
+                                selectedAddress: saved.address,
+                                //userId: saved.id, // 여기서 전달
+                              ),
+                            ),
+                          );
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
