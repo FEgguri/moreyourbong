@@ -47,8 +47,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final chatVm = ref.watch(chatViewModel(widget.party.partyName).notifier);
-    final chats = ref.read(chatViewModel(widget.party.partyName));
+    final chatVm = ref.read(chatViewModel(widget.party.partyName).notifier);
+    final chats = ref.watch(chatViewModel(widget.party.partyName));
 
     return GestureDetector(
       onTap: () {
@@ -66,12 +66,12 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         ),
         body: ListView.separated(
           padding: EdgeInsets.fromLTRB(12, 20, 12, _bottomSheetHeight + 10),
-          itemCount: 7,
+          itemCount: chats.length,
           separatorBuilder: (context, index) {
             return SizedBox(height: 10);
           },
           itemBuilder: (context, index) {
-            return tempDataList[index];
+            return ChattingCard(message: chats[index].message, time: chats[index].createdAt.toString(), isMine: false);
           },
         ),
         bottomSheet: SafeArea(
@@ -124,18 +124,21 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 SizedBox(width: 8),
                 GestureDetector(
                   onTap: () {
-                    print("send tap");
-                    chatVm.sendMessage(
+                    chatVm
+                        .sendMessage(
                       Chat(
                         id: "",
                         createdAt: DateTime.now(),
-                        message: "새로운 메세지",
+                        message: messageController.text,
                         partyName: widget.party.partyName,
                         imageUrl: "",
                         sender: "오상구",
                         senderId: "senderID",
                       ),
-                    );
+                    )
+                        .then((_) {
+                      messageController.text = "";
+                    });
                   },
                   child: Container(
                     width: 50,
