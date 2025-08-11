@@ -5,7 +5,6 @@ import 'package:moreyourbong/firebase_options.dart';
 import 'package:moreyourbong/models/party_model.dart';
 import 'package:moreyourbong/views/pages/chat/chat_page.dart';
 import 'package:moreyourbong/views/pages/party_list/party_list_page.dart';
-import 'package:moreyourbong/views/pages/welcome_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

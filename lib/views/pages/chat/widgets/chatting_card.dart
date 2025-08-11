@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ChattingCard extends StatelessWidget {
   String message;
   String time;
-  String imageUrl;
+  String? imageUrl;
   bool isMine;
 
   ChattingCard({
@@ -65,15 +65,21 @@ class ChattingCard extends StatelessWidget {
                   width: 50,
                   height: 50,
                   color: Colors.grey[400],
-                  child: Icon(
-                    Icons.person,
-                    size: 30,
-                  ),
+                  child: imageUrl == null
+                      ? Icon(
+                          Icons.person,
+                          size: 30,
+                        )
+                      : imageUrl!.isEmpty
+                          ? Icon(
+                              Icons.person,
+                              size: 30,
+                            )
+                          : Image.network(
+                              imageUrl!,
+                              fit: BoxFit.cover,
+                            ),
                 ),
-                // child: Image.network(
-                //   "https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
-                //   fit: BoxFit.cover,
-                // ),
               ),
               SizedBox(width: 8),
               Column(
@@ -121,17 +127,3 @@ class ChattingCard extends StatelessWidget {
           );
   }
 }
-
-String message = "안녕하세요 이 글은 장문의 글이라서 잘릴 수도 있어요 근데 제가 잘 설정 해놔서 4줄을 넘어가게 되면 ...으로 표시된답니다 ㅎ하하하하하하하하ㅏ하하하하하하하ㅏ하하하하하하하ㅏ";
-String time = "오후 2:31";
-
-List<ChattingCard> tempDataList = [
-  ChattingCard(message: message, time: time, imageUrl: "", isMine: false),
-  ChattingCard(message: message, time: time, imageUrl: "", isMine: false),
-  ChattingCard(message: message, time: time, imageUrl: "", isMine: true),
-  ChattingCard(message: message, time: time, imageUrl: "", isMine: false),
-  ChattingCard(message: message, time: time, imageUrl: "", isMine: true),
-  ChattingCard(message: message, time: time, imageUrl: "", isMine: true),
-  ChattingCard(message: message, time: time, imageUrl: "", isMine: false),
-  ChattingCard(message: message, time: time, imageUrl: "", isMine: true),
-];

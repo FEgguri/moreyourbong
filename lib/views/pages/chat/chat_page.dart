@@ -75,7 +75,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             return ChattingCard(
               message: chats[index].message,
               time: chats[index].createdAt.toString(),
-              imageUrl: "",
+              imageUrl: chats[index].imageUrl,
               isMine: user.id == chats[index].senderId,
             );
           },
@@ -137,7 +137,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                         createdAt: DateTime.now(),
                         message: messageController.text,
                         partyName: widget.party.partyName,
-                        imageUrl: user.img!,
+                        imageUrl: user.img,
                         sender: user.name,
                         senderId: user.id,
                         partyId: widget.party.id,
@@ -169,4 +169,4 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   }
 }
 
-UserModel user = UserModel(id: "Nh4TLr0eMicXhd2fof9m", address: "경기도 의정부시", img: "", name: "오상팔");
+UserModel user = UserModel(id: "Nh4TLr0eMicXhd2fof9m", address: "경기도 의정부시", name: "오상팔");
