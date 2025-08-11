@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:moreyourbong/views/pages/chat/widgets/message_option_dialog.dart';
 
 class ChattingCard extends StatelessWidget {
+  String id;
   String name;
   String message;
   String time;
@@ -11,6 +12,7 @@ class ChattingCard extends StatelessWidget {
   bool isMine;
 
   ChattingCard({
+    required this.id,
     required this.name,
     required this.message,
     required this.time,

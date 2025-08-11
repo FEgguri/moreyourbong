@@ -91,6 +91,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           },
           itemBuilder: (context, index) {
             return ChattingCard(
+              id: chats[index].id,
               name: chats[index].sender,
               message: chats[index].message,
               time: chats[index].createdAt.toString(),
