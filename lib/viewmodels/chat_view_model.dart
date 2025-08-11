@@ -34,6 +34,11 @@ class ChatViewModel extends AutoDisposeFamilyNotifier<List<Chat>, String> {
     return result;
   }
 
+  Future<bool> deleteMessageFromAll(String messageId) async {
+    final result = await chatRepo.deleteMessage(messageId);
+    return result;
+  }
+
   void listenStream(String partyId) {
     final stream = chatRepo.chatListStream(partyId);
     final streamSubscription = stream.listen(
