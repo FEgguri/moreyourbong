@@ -2,27 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:moreyourbong/models/party_model.dart';
 import 'package:moreyourbong/views/pages/chat/chat_page.dart';
 
-Future<void> showCustomDialog(BuildContext context, Party party) {
+Future<void> showPartyDetail(BuildContext context, Party party) {
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
       backgroundColor: Colors.white,
       titlePadding: const EdgeInsets.only(top: 30),
       contentPadding: const EdgeInsets.symmetric(vertical: 12),
-      title: const Text(
-        "채팅방에 참여하시겠습니까?",
+      title: Text(
+        party.partyName,
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w600,
         ),
       ),
-      content: const Text(
-        "내 프로필이 채팅방 참여자에게 보여집니다.\n바르고 고운말을 사용합시다.",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Color.fromARGB(255, 98, 98, 98),
-          fontSize: 12,
+      content: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Text(
+          party.content,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Color.fromARGB(255, 98, 98, 98),
+            fontSize: 12,
+          ),
         ),
       ),
       actions: [
@@ -55,7 +58,7 @@ Future<void> showCustomDialog(BuildContext context, Party party) {
                 borderRadius: BorderRadius.circular(10),
               )),
           child: const Text(
-            '확인',
+            "채팅하기",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
