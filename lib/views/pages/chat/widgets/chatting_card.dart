@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ChattingCard extends StatelessWidget {
+  String name;
   String message;
   String time;
   String? imageUrl;
   bool isMine;
 
   ChattingCard({
+    required this.name,
     required this.message,
     required this.time,
     required this.imageUrl,
@@ -102,7 +104,7 @@ class ChattingCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "오상구",
+                    name,
                     style: TextStyle(
                       color: Color(0xff343434),
                       fontWeight: FontWeight.bold,
