@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ChattingCard extends StatelessWidget {
   String message;
@@ -22,7 +23,7 @@ class ChattingCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                time,
+                DateFormat("a hh:mm", "ko_KR").format(DateTime.parse(time)),
                 style: TextStyle(
                   fontSize: 12,
                   color: Color(0xFF888888),
@@ -113,7 +114,7 @@ class ChattingCard extends StatelessWidget {
                       ),
                       SizedBox(width: 4),
                       Text(
-                        time.toString(),
+                        DateFormat("a hh:mm", "ko_KR").format(DateTime.parse(time)),
                         style: TextStyle(
                           fontSize: 12,
                           color: Color(0xFF888888),
