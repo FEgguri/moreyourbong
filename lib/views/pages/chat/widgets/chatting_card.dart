@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ChattingCard extends StatelessWidget {
   String message;
@@ -21,12 +22,25 @@ class ChattingCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                time,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF888888),
-                ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    DateFormat("yyyy/MM/dd", "ko_KR").format(DateTime.parse(time)),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF888888),
+                    ),
+                  ),
+                  Text(
+                    DateFormat("a hh:mm", "ko_KR").format(DateTime.parse(time)),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF888888),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(width: 4),
               GestureDetector(
@@ -112,12 +126,25 @@ class ChattingCard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 4),
-                      Text(
-                        time.toString(),
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Color(0xFF888888),
-                        ),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            DateFormat("yyyy/MM/dd", "ko_KR").format(DateTime.parse(time)),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF888888),
+                            ),
+                          ),
+                          Text(
+                            DateFormat("a hh:mm", "ko_KR").format(DateTime.parse(time)),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF888888),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
