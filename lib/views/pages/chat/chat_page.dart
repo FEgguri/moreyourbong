@@ -90,16 +90,18 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             return SizedBox(height: 10);
           },
           itemBuilder: (context, index) {
-            return ChattingCard(
-              id: chats[index].id,
-              senderId: chats[index].senderId,
-              senderName: chats[index].sender,
-              message: chats[index].message,
-              partyId: chats[index].partyId,
-              time: chats[index].createdAt.toString(),
-              imageUrl: chats[index].imageUrl,
-              isMine: user.id == chats[index].senderId,
-            );
+            return hiddenMessageIds.contains(chats[index].id)
+                ? SizedBox()
+                : ChattingCard(
+                    id: chats[index].id,
+                    senderId: chats[index].senderId,
+                    senderName: chats[index].sender,
+                    message: chats[index].message,
+                    partyId: chats[index].partyId,
+                    time: chats[index].createdAt.toString(),
+                    imageUrl: chats[index].imageUrl,
+                    isMine: user.id == chats[index].senderId,
+                  );
           },
         ),
         bottomSheet: SafeArea(
@@ -195,8 +197,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   }
 }
 
-UserModel user = UserModel(id: "senderId", address: "경기도 의정부시", name: "오상칠");
-// UserModel user = UserModel(id: "Nh4TLr0eMicXhd2fof9m", address: "경기도 의정부시", name: "오상팔");
+// UserModel user = UserModel(id: "senderId", address: "경기도 의정부시", name: "오상칠");
+UserModel user = UserModel(id: "Nh4TLr0eMicXhd2fof9m", address: "경기도 의정부시", name: "오상팔");
 // UserModel user = UserModel(
 //   id: "cbPEwXPCa0z0ZL8T4q1N",
 //   address: "경기도 의정부시",

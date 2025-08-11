@@ -44,3 +44,5 @@ class Chat {
     };
   }
 }
+
+final List<String> hiddenMessageIds = [];

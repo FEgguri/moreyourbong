@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moreyourbong/models/chat_model.dart';
 
 import 'package:moreyourbong/viewmodels/chat_view_model.dart';
 import 'package:moreyourbong/views/pages/chat/chat_page.dart';
@@ -26,13 +27,17 @@ class ReviewOptionDialog extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _getDialogOption(
-                  title: "내 기기에서 삭제",
-                  onTap: () {
-                    Navigator.pop(context);
-                    //
-                  },
-                ),
+                Consumer(builder: (context, ref, child) {
+                  return _getDialogOption(
+                    title: "내 기기에서 삭제",
+                    onTap: () {
+                      hiddenMessageIds.add(messageId);
+                      ref.refresh(chatViewModel(partyId));
+                      Navigator.pop(context);
+                      //
+                    },
+                  );
+                }),
                 if (senderId == user.id) ...[
                   Divider(height: 1),
                   Consumer(
