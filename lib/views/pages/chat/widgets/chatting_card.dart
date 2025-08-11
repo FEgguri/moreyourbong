@@ -1,15 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:moreyourbong/views/pages/chat/widgets/message_option_dialog.dart';
 
 class ChattingCard extends StatelessWidget {
+  String id;
+  String senderId;
+  String senderName;
   String message;
+  String partyId;
   String time;
   String? imageUrl;
   bool isMine;
 
   ChattingCard({
+    required this.id,
+    required this.senderId,
+    required this.senderName,
     required this.message,
+    required this.partyId,
     required this.time,
     required this.imageUrl,
     required this.isMine,
@@ -44,13 +53,15 @@ class ChattingCard extends StatelessWidget {
               ),
               SizedBox(width: 4),
               GestureDetector(
-                onTap: () {
-                  print("message tap");
-                  FocusScope.of(context).unfocus();
-                },
                 onLongPress: () {
                   print("message long press");
                   FocusScope.of(context).unfocus();
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ReviewOptionDialog(messageId: id, partyId: partyId, senderId: senderId);
+                    },
+                  );
                 },
                 child: Container(
                   padding: EdgeInsets.all(12),
@@ -100,7 +111,7 @@ class ChattingCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "오상구",
+                    senderName,
                     style: TextStyle(
                       color: Color(0xff343434),
                       fontWeight: FontWeight.bold,
@@ -110,19 +121,31 @@ class ChattingCard extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(12),
-                        constraints: BoxConstraints(maxWidth: 250),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: Text(
-                          message,
-                          softWrap: true,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 4,
-                          style: TextStyle(color: Color(0xFF343434)),
+                      GestureDetector(
+                        onLongPress: () {
+                          print("message long press");
+                          FocusScope.of(context).unfocus();
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return ReviewOptionDialog(messageId: id, partyId: partyId, senderId: senderId);
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(12),
+                          constraints: BoxConstraints(maxWidth: 250),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Text(
+                            message,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 4,
+                            style: TextStyle(color: Color(0xFF343434)),
+                          ),
                         ),
                       ),
                       SizedBox(width: 4),

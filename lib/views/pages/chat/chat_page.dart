@@ -22,13 +22,14 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   final GlobalKey _bottomSheetKey = GlobalKey();
 
   final messageController = TextEditingController();
+  final scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     // 화면이 그려진 후 BottomSheet height 측정
     WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
+      (_) {
         final bottomSheetContext = _bottomSheetKey.currentContext;
         if (bottomSheetContext != null) {
           final renderBox = bottomSheetContext.findRenderObject() as RenderBox;
@@ -43,13 +44,29 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   @override
   void dispose() {
     messageController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final chatVm = ref.read(chatViewModel(widget.party.partyName).notifier);
-    final chats = ref.watch(chatViewModel(widget.party.partyName));
+    final chatVm = ref.read(chatViewModel(widget.party.id).notifier);
+    final chats = ref.watch(chatViewModel(widget.party.id));
+    print(widget.party.id);
+    print(widget.party.id == "kuXkfaog4cgSML4xIJmQ");
+
+    ref.listen<List<Chat>>(
+      chatViewModel(widget.party.id),
+      (previous, next) {
+        if (previous == null || next.length > previous.length) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (scrollController.hasClients) {
+              scrollController.jumpTo(scrollController.position.maxScrollExtent);
+            }
+          });
+        }
+      },
+    );
 
     return GestureDetector(
       onTap: () {
@@ -67,17 +84,24 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         ),
         body: ListView.separated(
           padding: EdgeInsets.fromLTRB(12, 20, 12, _bottomSheetHeight + 10),
+          controller: scrollController,
           itemCount: chats.length,
           separatorBuilder: (context, index) {
             return SizedBox(height: 10);
           },
           itemBuilder: (context, index) {
-            return ChattingCard(
-              message: chats[index].message,
-              time: chats[index].createdAt.toString(),
-              imageUrl: chats[index].imageUrl,
-              isMine: user.id == chats[index].senderId,
-            );
+            return hiddenMessageIds.contains(chats[index].id)
+                ? SizedBox()
+                : ChattingCard(
+                    id: chats[index].id,
+                    senderId: chats[index].senderId,
+                    senderName: chats[index].sender,
+                    message: chats[index].message,
+                    partyId: chats[index].partyId,
+                    time: chats[index].createdAt.toString(),
+                    imageUrl: chats[index].imageUrl,
+                    isMine: user.id == chats[index].senderId,
+                  );
           },
         ),
         bottomSheet: SafeArea(
@@ -145,6 +169,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     )
                         .then((_) {
                       messageController.text = "";
+                      // 전송 후 스크롤 자동으로 밑으로
+                      // WidgetsBinding.instance.addPostFrameCallback((_) {
+                      //   scrollController.jumpTo(scrollController.position.maxScrollExtent);
+                      // });
                     });
                   },
                   child: Container(
@@ -169,4 +197,11 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   }
 }
 
+// UserModel user = UserModel(id: "senderId", address: "경기도 의정부시", name: "오상칠");
 UserModel user = UserModel(id: "Nh4TLr0eMicXhd2fof9m", address: "경기도 의정부시", name: "오상팔");
+// UserModel user = UserModel(
+//   id: "cbPEwXPCa0z0ZL8T4q1N",
+//   address: "경기도 의정부시",
+//   name: "오상구",
+//   img: "https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
+// );
