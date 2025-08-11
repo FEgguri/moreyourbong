@@ -1,8 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:moreyourbong/viewmodels/chat_view_model.dart';
+import 'package:moreyourbong/views/pages/chat/chat_page.dart';
 
 class ReviewOptionDialog extends StatelessWidget {
+  ReviewOptionDialog({
+    required this.partyId,
+    required this.messageId,
+    required this.senderId,
+  });
+  String partyId;
+  String messageId;
+  String senderId;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -22,17 +33,23 @@ class ReviewOptionDialog extends StatelessWidget {
                     //
                   },
                 ),
-                Divider(height: 1),
-                Consumer(builder: (context, ref, build) {
-                  // final viewModel = ref.read(chatViewModel);
-                  return _getDialogOption(
-                    title: "모든 대화 상대에게서 삭제",
-                    onTap: () async {
-                      Navigator.pop(context);
-                      //
+                if (senderId == user.id) ...[
+                  Divider(height: 1),
+                  Consumer(
+                    builder: (context, ref, build) {
+                      final viewModel = ref.read(chatViewModel(partyId).notifier);
+                      return _getDialogOption(
+                        title: "모든 대화 상대에게서 삭제",
+                        onTap: () async {
+                          await viewModel.deleteMessageFromAll(messageId).then((_) {
+                            Navigator.pop(context);
+                          });
+                          //
+                        },
+                      );
                     },
-                  );
-                }),
+                  ),
+                ],
               ],
             ),
           ),

@@ -5,16 +5,20 @@ import 'package:moreyourbong/views/pages/chat/widgets/message_option_dialog.dart
 
 class ChattingCard extends StatelessWidget {
   String id;
-  String name;
+  String senderId;
+  String senderName;
   String message;
+  String partyId;
   String time;
   String? imageUrl;
   bool isMine;
 
   ChattingCard({
     required this.id,
-    required this.name,
+    required this.senderId,
+    required this.senderName,
     required this.message,
+    required this.partyId,
     required this.time,
     required this.imageUrl,
     required this.isMine,
@@ -55,7 +59,7 @@ class ChattingCard extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return ReviewOptionDialog();
+                      return ReviewOptionDialog(messageId: id, partyId: partyId, senderId: senderId);
                     },
                   );
                 },
@@ -107,7 +111,7 @@ class ChattingCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    senderName,
                     style: TextStyle(
                       color: Color(0xff343434),
                       fontWeight: FontWeight.bold,
@@ -124,7 +128,7 @@ class ChattingCard extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return ReviewOptionDialog();
+                              return ReviewOptionDialog(messageId: id, partyId: partyId, senderId: senderId);
                             },
                           );
                         },
