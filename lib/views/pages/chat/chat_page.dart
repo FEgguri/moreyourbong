@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moreyourbong/models/chat_model.dart';
 import 'package:moreyourbong/models/party_model.dart';
 import 'package:moreyourbong/models/user_model.dart';
+import 'package:moreyourbong/utils/date_time_utils.dart';
 import 'package:moreyourbong/viewmodels/chat_view_model.dart';
 import 'package:moreyourbong/views/pages/chat/widgets/chatting_card.dart';
 
@@ -17,6 +18,9 @@ class ChatPage extends ConsumerStatefulWidget {
 
 class _ChatPageState extends ConsumerState<ChatPage> {
   double _bottomSheetHeight = 0;
+  DateTime lastSendTime = DateTime(0);
+  bool lastSendIsMine = false;
+  String lastSenderId = "";
 
   // BottomSheet의 자식 위젯에 GlobalKey 설정
   final GlobalKey _bottomSheetKey = GlobalKey();
@@ -52,8 +56,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   Widget build(BuildContext context) {
     final chatVm = ref.read(chatViewModel(widget.party.id).notifier);
     final chats = ref.watch(chatViewModel(widget.party.id));
-    print(widget.party.id);
-    print(widget.party.id == "kuXkfaog4cgSML4xIJmQ");
 
     ref.listen<List<Chat>>(
       chatViewModel(widget.party.id),
@@ -82,26 +84,80 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        body: ListView.separated(
+        body: ListView.builder(
           padding: EdgeInsets.fromLTRB(12, 20, 12, _bottomSheetHeight + 10),
           controller: scrollController,
           itemCount: chats.length,
-          separatorBuilder: (context, index) {
-            return SizedBox(height: 10);
-          },
           itemBuilder: (context, index) {
-            return hiddenMessageIds.contains(chats[index].id)
-                ? SizedBox()
-                : ChattingCard(
-                    id: chats[index].id,
-                    senderId: chats[index].senderId,
-                    senderName: chats[index].sender,
-                    message: chats[index].message,
-                    partyId: chats[index].partyId,
-                    time: chats[index].createdAt.toString(),
-                    imageUrl: chats[index].imageUrl,
-                    isMine: user.id == chats[index].senderId,
-                  );
+            // print(chats.length);
+            // print(hiddenMessageIds.length);
+            // for (int j = 0; j < hiddenMessageIds.length; j++) {
+            //   print(hiddenMessageIds[j]);
+            // }
+            String currentMessageId = chats[index].id;
+            if (hiddenMessageIds.contains(currentMessageId)) {
+              return SizedBox();
+            }
+            String currentSenderId = chats[index].senderId;
+            DateTime currentMessageSendTime = chats[index].createdAt;
+            String time = currentMessageSendTime.toString();
+            bool showProfile = true;
+
+            if (index > 0) {
+              int i = index - 1;
+              String nextSenderId = chats[i].senderId;
+              DateTime nextMessageSendTime = chats[i].createdAt;
+              if (currentSenderId == nextSenderId) {
+                final diff = currentMessageSendTime.difference(nextMessageSendTime);
+                if (diff.inMinutes < 1) {
+                  if (!hiddenMessageIds.contains(chats[i].id)) {
+                    showProfile = false;
+                  }
+                }
+              }
+            }
+
+            if (index < chats.length - 1) {
+              int i = index + 1;
+              // 다음 메세지가 1분 이내의 메세지이지만 내 기기에서 삭제한 메세지인 경우 대비
+              while (i < chats.length && hiddenMessageIds.contains(chats[i].id)) {
+                i++;
+              }
+              // i번째 메세지가 내 기기에서 삭제된 경우 다시 전으로 찾아가기
+              if (i == chats.length) {
+                i--;
+                while (hiddenMessageIds.contains(chats[i].id)) {
+                  i--;
+                }
+              }
+              if (index != i) {
+                String nextSenderId = chats[i].senderId;
+                DateTime nextMessageSendTime = chats[i].createdAt;
+                if (currentSenderId == nextSenderId) {
+                  final diff = nextMessageSendTime.difference(currentMessageSendTime);
+                  if (diff.inMinutes < 1) {
+                    time = "";
+                  }
+                }
+              }
+            }
+
+            return Column(
+              children: [
+                ChattingCard(
+                  id: chats[index].id,
+                  senderId: chats[index].senderId,
+                  senderName: chats[index].sender,
+                  message: chats[index].message,
+                  partyId: chats[index].partyId,
+                  time: time,
+                  imageUrl: chats[index].imageUrl,
+                  isMine: user.id == chats[index].senderId,
+                  showProfile: showProfile,
+                ),
+                SizedBox(height: 8),
+              ],
+            );
           },
         ),
         bottomSheet: SafeArea(

@@ -43,7 +43,6 @@ class ChatViewModel extends AutoDisposeFamilyNotifier<List<Chat>, String> {
     final stream = chatRepo.chatListStream(partyId);
     final streamSubscription = stream.listen(
       (chatList) {
-        print("ddd");
         state = chatList;
       },
     );

@@ -12,6 +12,7 @@ class ChattingCard extends StatelessWidget {
   String time;
   String? imageUrl;
   bool isMine;
+  bool showProfile;
 
   ChattingCard({
     required this.id,
@@ -22,6 +23,7 @@ class ChattingCard extends StatelessWidget {
     required this.time,
     required this.imageUrl,
     required this.isMine,
+    required this.showProfile,
   });
 
   @override
@@ -31,26 +33,28 @@ class ChattingCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    DateFormat("yyyy/MM/dd", "ko_KR").format(DateTime.parse(time)),
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF888888),
+              time.isEmpty
+                  ? SizedBox()
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          DateFormat("yyyy/MM/dd", "ko_KR").format(DateTime.parse(time)),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFF888888),
+                          ),
+                        ),
+                        Text(
+                          DateFormat("a hh:mm", "ko_KR").format(DateTime.parse(time)),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFF888888),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Text(
-                    DateFormat("a hh:mm", "ko_KR").format(DateTime.parse(time)),
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF888888),
-                    ),
-                  ),
-                ],
-              ),
               SizedBox(width: 4),
               GestureDetector(
                 onLongPress: () {
@@ -86,38 +90,42 @@ class ChattingCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  color: Colors.grey[400],
-                  child: imageUrl == null
-                      ? Icon(
-                          Icons.person,
-                          size: 30,
-                        )
-                      : imageUrl!.isEmpty
-                          ? Icon(
-                              Icons.person,
-                              size: 30,
-                            )
-                          : Image.network(
-                              imageUrl!,
-                              fit: BoxFit.cover,
-                            ),
-                ),
+                child: !showProfile
+                    ? SizedBox(width: 50)
+                    : Container(
+                        width: 50,
+                        height: 50,
+                        color: Colors.grey[400],
+                        child: imageUrl == null
+                            ? Icon(
+                                Icons.person,
+                                size: 30,
+                              )
+                            : imageUrl!.isEmpty
+                                ? Icon(
+                                    Icons.person,
+                                    size: 30,
+                                  )
+                                : Image.network(
+                                    imageUrl!,
+                                    fit: BoxFit.cover,
+                                  ),
+                      ),
               ),
               SizedBox(width: 8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    senderName,
-                    style: TextStyle(
-                      color: Color(0xff343434),
-                      fontWeight: FontWeight.bold,
+                  if (showProfile) ...[
+                    Text(
+                      senderName,
+                      style: TextStyle(
+                        color: Color(0xff343434),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 4),
+                    SizedBox(height: 4),
+                  ],
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -149,30 +157,33 @@ class ChattingCard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 4),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            DateFormat("yyyy/MM/dd", "ko_KR").format(DateTime.parse(time)),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xFF888888),
+                      time.isEmpty
+                          ? SizedBox()
+                          : Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  DateFormat("yyyy/MM/dd", "ko_KR").format(DateTime.parse(time)),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xFF888888),
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat("a hh:mm", "ko_KR").format(DateTime.parse(time)),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xFF888888),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Text(
-                            DateFormat("a hh:mm", "ko_KR").format(DateTime.parse(time)),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xFF888888),
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ],
               ),
+              //
             ],
           );
   }
