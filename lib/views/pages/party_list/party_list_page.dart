@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:moreyourbong/views/pages/create_party_page.dart';
 import 'package:moreyourbong/views/pages/party_list/widgets/party_list.dart';
 
 class PartyListPage extends StatefulWidget {
