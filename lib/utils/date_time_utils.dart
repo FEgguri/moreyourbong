@@ -3,17 +3,14 @@ import 'package:intl/intl.dart';
 class DateTimeUtils {
   // DataeTimeUtils().format
   // DataeTimeUtils.formatString
-  static String formatString(DateTime dateTime) {
-    final now = DateTime.now();
-    final diff = now.difference(dateTime);
+  static String formatString(DateTime oldTime, DateTime newTime) {
+    final diff = newTime.difference(oldTime);
 
-    if (diff.inMinutes < 60) {
-      // 1시간 이내
-      return "${diff.inMinutes} 분 전";
-    } else if (diff.inHours < 24) {
-      return "${diff.inHours} 시간 전";
+    if (diff.inMinutes < 1) {
+      // 1분 이내
+      return "";
     } else {
-      return DateFormat("M월 d일").format(dateTime);
+      return newTime.toString();
     }
   }
 }
