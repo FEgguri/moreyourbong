@@ -14,7 +14,7 @@ class Chat {
     required this.senderId, // 메세지 쓴 사람 고유 ID -> 닉네임이 겹칠까봐?
     required this.partyName, // 모임 이름으로 고유 키 역할
     required this.message, // 메세지 내용
-    required this.partyId, // 메세지 작성 날짜 및 시간
+    required this.partyId, // 모임 고유 ID
     required this.createdAt, // 메세지 작성 날짜 및 시간
     required this.imageUrl, // 메세지 쓴 사람 이미지
   });

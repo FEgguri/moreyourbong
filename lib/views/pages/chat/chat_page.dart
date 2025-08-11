@@ -48,8 +48,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final chatVm = ref.read(chatViewModel(widget.party.partyName).notifier);
-    final chats = ref.watch(chatViewModel(widget.party.partyName));
+    final chatVm = ref.read(chatViewModel(widget.party.id).notifier);
+    final chats = ref.watch(chatViewModel(widget.party.id));
+    print(widget.party.id);
+    print(widget.party.id == "kuXkfaog4cgSML4xIJmQ");
 
     return GestureDetector(
       onTap: () {

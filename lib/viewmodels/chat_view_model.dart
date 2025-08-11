@@ -17,8 +17,8 @@ class ChatViewModel extends AutoDisposeFamilyNotifier<List<Chat>, String> {
   final chatRepo = ChatRepository();
   StreamSubscription<List<Chat>>? sub;
 
-  Future<void> getChatMessages(String partyName) async {
-    final result = await chatRepo.getChatMessages(partyName);
+  Future<void> getChatMessages(String partyId) async {
+    final result = await chatRepo.getChatMessages(partyId);
     state = result ?? [];
   }
 
@@ -27,14 +27,15 @@ class ChatViewModel extends AutoDisposeFamilyNotifier<List<Chat>, String> {
       sender: newChat.sender,
       senderId: newChat.senderId,
       partyName: newChat.partyName,
+      partyId: newChat.partyId,
       message: newChat.message,
       imageUrl: newChat.imageUrl,
     );
     return result;
   }
 
-  void listenStream(String partyName) {
-    final stream = chatRepo.chatListStream(partyName);
+  void listenStream(String partyId) {
+    final stream = chatRepo.chatListStream(partyId);
     final streamSubscription = stream.listen(
       (chatList) {
         print("ddd");

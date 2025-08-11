@@ -44,13 +44,15 @@ class ChattingCard extends StatelessWidget {
               ),
               SizedBox(width: 4),
               GestureDetector(
-                onTap: () {
-                  print("message tap");
-                  FocusScope.of(context).unfocus();
-                },
                 onLongPress: () {
                   print("message long press");
                   FocusScope.of(context).unfocus();
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Container();
+                    },
+                  );
                 },
                 child: Container(
                   padding: EdgeInsets.all(12),

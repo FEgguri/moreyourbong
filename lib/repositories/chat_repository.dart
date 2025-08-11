@@ -30,6 +30,7 @@ class ChatRepository {
     required String sender,
     required String senderId,
     required String partyName,
+    required String partyId,
     required String message,
     required String? imageUrl,
   }) async {
@@ -42,6 +43,7 @@ class ChatRepository {
         "sender": sender,
         "senderId": senderId,
         "partyName": partyName,
+        "partyId": partyId,
         "message": message,
         "imageUrl": imageUrl,
         "createdAt": DateTime.now().toIso8601String(),
@@ -53,11 +55,11 @@ class ChatRepository {
     }
   }
 
-  Stream<List<Chat>> chatListStream(String partyName) {
+  Stream<List<Chat>> chatListStream(String partyId) {
     try {
       //
       final firestore = FirebaseFirestore.instance;
-      final collection = firestore.collection("Chat").where("partyName", isEqualTo: partyName).orderBy("createdAt", descending: false);
+      final collection = firestore.collection("Chat").where("partyId", isEqualTo: partyId).orderBy("createdAt", descending: false);
       final stream = collection.snapshots();
       final newStream = stream.map((event) {
         return event.docs.map((e) {
