@@ -31,7 +31,7 @@ class ChatRepository {
     required String senderId,
     required String partyName,
     required String message,
-    required String imageUrl,
+    required String? imageUrl,
   }) async {
     try {
       final firestore = FirebaseFirestore.instance;

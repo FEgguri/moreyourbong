@@ -6,7 +6,7 @@ class Chat {
   String message;
   String partyId;
   DateTime createdAt;
-  String imageUrl;
+  String? imageUrl;
 
   Chat({
     required this.id,
