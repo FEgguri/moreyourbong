@@ -6,12 +6,12 @@ class ReviewOptionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Material(
-        borderRadius: BorderRadius.circular(12),
-        color: Colors.white,
-        child: SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Material(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+          child: SizedBox(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -19,6 +19,7 @@ class ReviewOptionDialog extends StatelessWidget {
                   title: "내 기기에서 삭제",
                   onTap: () {
                     Navigator.pop(context);
+                    //
                   },
                 ),
                 Divider(height: 1),
@@ -27,10 +28,8 @@ class ReviewOptionDialog extends StatelessWidget {
                   return _getDialogOption(
                     title: "모든 대화 상대에게서 삭제",
                     onTap: () async {
-                      // await viewModel.deleteReview(review.id).then((_) {
-                      //   if (!context.mounted) return;
-                      //   Navigator.pop(context);
-                      // });
+                      Navigator.pop(context);
+                      //
                     },
                   );
                 }),

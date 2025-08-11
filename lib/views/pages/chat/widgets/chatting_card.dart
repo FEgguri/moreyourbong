@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:moreyourbong/views/pages/chat/widgets/message_option_dialog.dart';
 
 class ChattingCard extends StatelessWidget {
   String name;
@@ -52,7 +53,7 @@ class ChattingCard extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return Container();
+                      return ReviewOptionDialog();
                     },
                   );
                 },
@@ -114,19 +115,31 @@ class ChattingCard extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(12),
-                        constraints: BoxConstraints(maxWidth: 250),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: Text(
-                          message,
-                          softWrap: true,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 4,
-                          style: TextStyle(color: Color(0xFF343434)),
+                      GestureDetector(
+                        onLongPress: () {
+                          print("message long press");
+                          FocusScope.of(context).unfocus();
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return ReviewOptionDialog();
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(12),
+                          constraints: BoxConstraints(maxWidth: 250),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Text(
+                            message,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 4,
+                            style: TextStyle(color: Color(0xFF343434)),
+                          ),
                         ),
                       ),
                       SizedBox(width: 4),

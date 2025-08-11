@@ -193,10 +193,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 }
 
 // UserModel user = UserModel(id: "senderId", address: "경기도 의정부시", name: "오상칠");
-// UserModel user = UserModel(id: "Nh4TLr0eMicXhd2fof9m", address: "경기도 의정부시", name: "오상팔");
-UserModel user = UserModel(
-  id: "cbPEwXPCa0z0ZL8T4q1N",
-  address: "경기도 의정부시",
-  name: "오상구",
-  img: "https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
-);
+UserModel user = UserModel(id: "Nh4TLr0eMicXhd2fof9m", address: "경기도 의정부시", name: "오상팔");
+// UserModel user = UserModel(
+//   id: "cbPEwXPCa0z0ZL8T4q1N",
+//   address: "경기도 의정부시",
+//   name: "오상구",
+//   img: "https://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg",
+// );
