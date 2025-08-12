@@ -28,15 +28,6 @@ class UserRepository {
     );
   }
 
-  /// 실시간 구독
-  Stream<UserModel?> watchUser(String userId) {
-    return _col.doc(userId).snapshots().map((snap) {
-      if (!snap.exists || snap.data() == null) return null;
-      final data = {...snap.data()!, 'id': snap.id};
-      return UserModel.fromMap(data);
-    });
-  }
-
   /// 단건 조회
   Future<UserModel?> fetchUser(String userId) async {
     final doc = await _col.doc(userId).get();
