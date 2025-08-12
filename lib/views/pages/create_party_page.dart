@@ -99,7 +99,6 @@ class _CreatePartyPageState extends ConsumerState<CreatePartyPage> {
           borderRadius: const BorderRadius.all(Radius.circular(15)),
           color: const Color(0xFFF8F4E8),
         ),
-        // color: const Color(0xFFF8F4E8),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(

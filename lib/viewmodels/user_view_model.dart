@@ -24,7 +24,6 @@ class UserViewModel extends Notifier<UserModel> {
   void setLocalImagePath(String path) {
     _localImagePath = path;
     // 미리보기 위해 img에 로컬 표시용
-    // state = state.copyWith(img: path);
   }
 
   Future<void> setAddressFromCurrentLocation() async {
@@ -53,7 +52,6 @@ class UserViewModel extends Notifier<UserModel> {
     }
 
     try {
-      // ...현재 로직
       final storage = ref.read(storageRepositoryProvider);
       final repo = ref.read(userRepositoryProvider);
       var current = state;
