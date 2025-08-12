@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:moreyourbong/firebase_options.dart';
-import 'package:moreyourbong/models/party_model.dart';
-import 'package:moreyourbong/views/pages/chat/chat_page.dart';
-import 'package:moreyourbong/views/pages/party_list/party_list_page.dart';
 import 'package:moreyourbong/views/pages/welcom_page/welcome_page.dart';
 
 void main() async {
