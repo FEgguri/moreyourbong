@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moreyourbong/models/chat_model.dart';
 
 import 'package:moreyourbong/viewmodels/chat_view_model.dart';
+import 'package:moreyourbong/viewmodels/global_user_view_model.dart';
 import 'package:moreyourbong/views/pages/chat/chat_page.dart';
 
 class ReviewOptionDialog extends StatelessWidget {
@@ -24,11 +25,13 @@ class ReviewOptionDialog extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           color: Colors.white,
           child: SizedBox(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Consumer(builder: (context, ref, child) {
-                  return _getDialogOption(
+            child: Consumer(builder: (context, ref, child) {
+              final user = ref.watch(globalUserProvider);
+              final viewModel = ref.read(chatViewModel(partyId).notifier);
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _getDialogOption(
                     title: "내 기기에서 삭제",
                     onTap: () {
                       hiddenMessageIds.add(messageId);
@@ -36,27 +39,23 @@ class ReviewOptionDialog extends StatelessWidget {
                       Navigator.pop(context);
                       //
                     },
-                  );
-                }),
-                if (senderId == user.id) ...[
-                  Divider(height: 1),
-                  Consumer(
-                    builder: (context, ref, build) {
-                      final viewModel = ref.read(chatViewModel(partyId).notifier);
-                      return _getDialogOption(
-                        title: "모든 대화 상대에게서 삭제",
-                        onTap: () async {
-                          await viewModel.deleteMessageFromAll(messageId).then((_) {
-                            Navigator.pop(context);
-                          });
-                          //
-                        },
-                      );
-                    },
                   ),
+                  if (senderId == user!.id) ...[
+                    Divider(height: 1),
+                    _getDialogOption(
+                      title: "모든 대화 상대에게서 삭제",
+                      onTap: () async {
+                        await viewModel.deleteMessageFromAll(messageId).then(
+                          (_) {
+                            Navigator.pop(context);
+                          },
+                        );
+                      },
+                    ),
+                  ],
                 ],
-              ],
-            ),
+              );
+            }),
           ),
         ),
       ),

@@ -10,15 +10,15 @@ import 'package:moreyourbong/repositories/chat_repository.dart';
 class ChatViewModel extends AutoDisposeFamilyNotifier<List<Chat>, String> {
   @override
   List<Chat> build(String arg) {
-    listenStream(arg);
+    listenStream();
     return [];
   }
 
   final chatRepo = ChatRepository();
   StreamSubscription<List<Chat>>? sub;
 
-  Future<void> getChatMessages(String partyId) async {
-    final result = await chatRepo.getChatMessages(partyId);
+  Future<void> getChatMessages() async {
+    final result = await chatRepo.getChatMessages(arg);
     state = result ?? [];
   }
 
@@ -39,8 +39,8 @@ class ChatViewModel extends AutoDisposeFamilyNotifier<List<Chat>, String> {
     return result;
   }
 
-  void listenStream(String partyId) {
-    final stream = chatRepo.chatListStream(partyId);
+  void listenStream() {
+    final stream = chatRepo.chatListStream(arg);
     final streamSubscription = stream.listen(
       (chatList) {
         state = chatList;
