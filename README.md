@@ -172,14 +172,6 @@ lib/
 - [ ] 모임 참여/탈퇴 기능
 - [ ] 사용자 평가 시스템
 
-## 🤝 기여하기
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
 ---
 
 **MoreYourBong**으로 더 많은 사람들과 의미 있는 모임을 만들어보세요! 🎉
