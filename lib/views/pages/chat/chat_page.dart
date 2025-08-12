@@ -7,6 +7,7 @@ import 'package:moreyourbong/models/party_model.dart';
 import 'package:moreyourbong/models/user_model.dart';
 import 'package:moreyourbong/utils/date_time_utils.dart';
 import 'package:moreyourbong/viewmodels/chat_view_model.dart';
+import 'package:moreyourbong/viewmodels/global_user_view_model.dart';
 import 'package:moreyourbong/views/pages/chat/widgets/chatting_card.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
@@ -56,6 +57,15 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   Widget build(BuildContext context) {
     final chatVm = ref.read(chatViewModel(widget.party.id).notifier);
     final chats = ref.watch(chatViewModel(widget.party.id));
+    final user = ref.watch(globalUserProvider);
+    // final user = null;
+    if (user == null) {
+      return Scaffold(
+        body: Center(
+          child: Text("유저 정보가 존재하지 않습니다."),
+        ),
+      );
+    }
 
     ref.listen<List<Chat>>(
       chatViewModel(widget.party.id),
@@ -254,7 +264,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 }
 
 // UserModel user = UserModel(id: "senderId", address: "경기도 의정부시", name: "오상칠");
-UserModel user = UserModel(id: "Nh4TLr0eMicXhd2fof9m", address: "경기도 의정부시", name: "오상팔");
+// UserModel user = UserModel(id: "Nh4TLr0eMicXhd2fof9m", address: "경기도 의정부시", name: "오상팔");
 // UserModel user = UserModel(
 //   id: "cbPEwXPCa0z0ZL8T4q1N",
 //   address: "경기도 의정부시",

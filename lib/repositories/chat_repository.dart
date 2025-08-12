@@ -57,7 +57,6 @@ class ChatRepository {
 
   Future<bool> deleteMessage(String messageId) async {
     try {
-      //
       final collection = firestore.collection("Chat");
       final doc = collection.doc(messageId);
       await doc.delete();
