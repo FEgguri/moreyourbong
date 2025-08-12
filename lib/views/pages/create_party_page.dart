@@ -93,17 +93,18 @@ class _CreatePartyPageState extends ConsumerState<CreatePartyPage> {
     return Scaffold(
       appBar: appBar(context),
       body: Container(
-        color: const Color(0xFFF8F4E8),
+        height: double.infinity,
+        decoration: BoxDecoration(
+          border: Border.all(width: 2, color: Colors.white),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          color: const Color(0xFFF8F4E8),
+        ),
+        // color: const Color(0xFFF8F4E8),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: Colors.white),
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  color: const Color(0xFFF8F4E8),
-                ),
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [

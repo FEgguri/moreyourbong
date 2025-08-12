@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moreyourbong/views/pages/create_party_page.dart';
 import 'package:moreyourbong/views/pages/party_list/widgets/party_list.dart';
 
 class PartyListPage extends StatefulWidget {
@@ -28,7 +29,11 @@ class _PartyListPageState extends State<PartyListPage> {
       body: PartyList(selectedAddress: widget.selectedAddress),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePartyPage()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CreatePartyPage(
+                      selectedAddress: widget.selectedAddress)));
         },
         backgroundColor: Color(0xFF4CAF50),
         foregroundColor: Colors.white,
